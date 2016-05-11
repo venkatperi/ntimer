@@ -1,7 +1,7 @@
 # ntimer
 An event firing, repeatable, cancellable timer for `nodejs`.
 
-[![Build Status](https://travis-ci.org/venkatperi/js-fsm.svg?branch=master)](https://travis-ci.org/venkatperi/js-fsm)
+[![Build Status](https://travis-ci.org/venkatperi/ntimer.svg?branch=master)](https://travis-ci.org/venkatperi/ntimer)
 
 ## Installation
 
