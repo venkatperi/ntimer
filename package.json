@@ -1,0 +1,33 @@
+{
+  "name": "ntimer",
+  "version": "0.2.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/venkatperi/ntimer.git"
+  },
+  "preferGlobal": false,
+  "description": "nodejs timer class with start/stop",
+  "dependencies": {
+    "error": "^7.0.2",
+    "millisecond": "^0.1.2"
+  },
+  "bundleDependencies": [],
+  "main": "dist/index",
+  "scripts": {
+    "prepublish": "grunt",
+    "test": "mocha && istanbul report text-summary lcov && rm -rf ./coverage"
+  },
+  "devDependencies": {
+    "coffee-coverage": "^1.0.1",
+    "coveralls": "^2.11.9",
+    "grunt": "~0.4",
+    "grunt-coffeelint": "0.0.15",
+    "grunt-contrib-clean": "^1.0.0",
+    "grunt-contrib-coffee": "^1.0.0",
+    "istanbul": "^0.4.3",
+    "merge": "^1.2.0",
+    "should": "^8.3.1"
+  },
+  "author": "Venkat Peri <venkatperi@gmail.com> (http://www.vperi.com/)",
+  "license": "MIT"
+}
