@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Ntimer by venkatperi</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Ntimer</h1>
+      <h2 class="project-tagline">An event firing, repeatable, cancellable timer for nodejs.</h2>
+      <a href="https://github.com/venkatperi/ntimer" class="btn">View on GitHub</a>
+      <a href="https://github.com/venkatperi/ntimer/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/venkatperi/ntimer/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="ntimer" class="anchor" href="#ntimer" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>ntimer</h1>
+
+<p>An event firing, repeatable, cancellable timer for <code>nodejs</code>.</p>
+
+<p><a href="https://travis-ci.org/venkatperi/ntimer"><img src="https://travis-ci.org/venkatperi/ntimer.svg?branch=master" alt="Build Status"></a></p>
+
+<hr>
+
+<h2>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Installation</h2>
+
+<p>Install with npm</p>
+
+<div class="highlight highlight-source-shell"><pre>npm install ntimer</pre></div>
+
+<hr>
+
+<h2>
+<a id="examples" class="anchor" href="#examples" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Examples</h2>
+
+<h3>
+<a id="just-a-timer" class="anchor" href="#just-a-timer" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Just a Timer</h3>
+
+<div class="highlight highlight-source-coffee"><pre><span class="pl-v">ntimer</span> <span class="pl-k">=</span> <span class="pl-c1">require</span> <span class="pl-s"><span class="pl-pds">'</span>ntimer<span class="pl-pds">'</span></span>
+
+<span class="pl-en">ntimer</span>(<span class="pl-s"><span class="pl-pds">'</span>foo<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>2s<span class="pl-pds">'</span></span>)
+.<span class="pl-en">on</span> <span class="pl-s"><span class="pl-pds">"</span>done<span class="pl-pds">"</span></span>, <span class="pl-k">-&gt;</span> <span class="pl-c"># do something</span>
+.<span class="pl-en">start</span>()</pre></div>
+
+<h3>
+<a id="auto-start" class="anchor" href="#auto-start" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Auto Start</h3>
+
+<div class="highlight highlight-source-coffee"><pre>ntimer.<span class="pl-en">auto</span>(<span class="pl-s"><span class="pl-pds">'</span>foo<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>2s<span class="pl-pds">'</span></span>)
+.<span class="pl-en">on</span> <span class="pl-s"><span class="pl-pds">"</span>done<span class="pl-pds">"</span></span>, <span class="pl-k">-&gt;</span> <span class="pl-c"># do something</span></pre></div>
+
+<h3>
+<a id="cancel-timer" class="anchor" href="#cancel-timer" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Cancel Timer</h3>
+
+<div class="highlight highlight-source-coffee"><pre><span class="pl-v">t</span> <span class="pl-k">=</span> ntimer.<span class="pl-en">auto</span>(<span class="pl-s"><span class="pl-pds">'</span>foo<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>5s<span class="pl-pds">'</span></span>)
+.<span class="pl-en">on</span> <span class="pl-s"><span class="pl-pds">"</span>done<span class="pl-pds">"</span></span>, <span class="pl-k">-&gt;</span> <span class="pl-c"># do something</span>
+.<span class="pl-en">on</span> <span class="pl-s"><span class="pl-pds">"</span>cancelled<span class="pl-pds">"</span></span>, <span class="pl-k">-&gt;</span> <span class="pl-c"># why, oh why?</span>
+
+<span class="pl-c"># start another timer to cancel the above before it fires</span>
+setTimeout ( <span class="pl-k">-&gt;</span> t.<span class="pl-en">cancel</span>()), <span class="pl-c1">500</span></pre></div>
+
+<h3>
+<a id="repeat" class="anchor" href="#repeat" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Repeat</h3>
+
+<div class="highlight highlight-source-coffee"><pre>ntimer.<span class="pl-en">repeat</span>(<span class="pl-s"><span class="pl-pds">'</span>foo<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>500ms<span class="pl-pds">'</span></span>)
+.<span class="pl-en">on</span> <span class="pl-s"><span class="pl-pds">"</span>timer<span class="pl-pds">"</span></span>, <span class="pl-smi">(name, count)</span> <span class="pl-k">-&gt;</span> <span class="pl-c"># fired every 500ms</span>
+.<span class="pl-en">start</span>()</pre></div>
+
+<h3>
+<a id="limited-repeat" class="anchor" href="#limited-repeat" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Limited Repeat</h3>
+
+<div class="highlight highlight-source-coffee"><pre>ntimer.<span class="pl-en">repeat</span>(<span class="pl-s"><span class="pl-pds">'</span>foo<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>500ms<span class="pl-pds">'</span></span>, <span class="pl-c1">5</span>)
+.<span class="pl-en">on</span> <span class="pl-s"><span class="pl-pds">"</span>timer<span class="pl-pds">"</span></span>, <span class="pl-smi">(name, count)</span> <span class="pl-k">-&gt;</span> <span class="pl-c"># fired every 500ms, five times</span>
+.<span class="pl-en">on</span> <span class="pl-s"><span class="pl-pds">"</span>done<span class="pl-pds">"</span></span>, <span class="pl-k">-&gt;</span> <span class="pl-c"># fired after the fifth 'timer' event</span>
+.<span class="pl-en">start</span>()</pre></div>
+
+<hr>
+
+<h2>
+<a id="api" class="anchor" href="#api" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>API</h2>
+
+<h3>
+<a id="create-timers" class="anchor" href="#create-timers" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Create Timers</h3>
+
+<h4>
+<a id="ntimername-timeout" class="anchor" href="#ntimername-timeout" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>ntimer(name, timeout)</h4>
+
+<h4>
+<a id="ntimerautoname-timeout" class="anchor" href="#ntimerautoname-timeout" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>ntimer.auto(name, timeout)</h4>
+
+<p>Creates a single shot, restartable timer. <code>ntimer.auto</code> creates an auto starting timer.</p>
+
+<ul>
+<li>
+<strong>name</strong> <code>{String}</code> is returned as the first argument of events.</li>
+<li>
+<strong>timeout</strong> can be a <code>{Number}</code> in <code>milliseconds</code> or a <code>{String}</code>. See <a href="https://github.com/unshiftio/millisecond">format</a>. </li>
+</ul>
+
+<h4>
+<a id="ntimerrepeatname-timeout-maxrepeaet" class="anchor" href="#ntimerrepeatname-timeout-maxrepeaet" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>ntimer.repeat(name, timeout[, maxRepeaet])</h4>
+
+<h4>
+<a id="ntimerautorepeatname-timeout-maxrepeat" class="anchor" href="#ntimerautorepeatname-timeout-maxrepeat" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>ntimer.autoRepeat(name, timeout[, maxRepeat])</h4>
+
+<p>Creates a repeating timer. <code>ntimer.auto</code> creates an auto starting version.</p>
+
+<ul>
+<li>
+<strong>name</strong> <code>{String}</code> is returned as the first argument of events.</li>
+<li>
+<strong>timeout</strong> can be a <code>{Number}</code> in <code>milliseconds</code> or a <code>{String}</code>. See <a href="https://github.com/unshiftio/millisecond">format</a>. </li>
+<li>
+<strong>maxRepeat</strong> an optional <code>{Number}</code> specifies the maximum repeat count. </li>
+</ul>
+
+<hr>
+
+<h3>
+<a id="properties" class="anchor" href="#properties" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Properties</h3>
+
+<h4>
+<a id="timercount" class="anchor" href="#timercount" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>timer.count</h4>
+
+<p>The <code>{Number}</code> of times the repeating timer has already fired.</p>
+
+<h4>
+<a id="timerrunning" class="anchor" href="#timerrunning" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>timer.running</h4>
+
+<p>A <code>{Boolean}</code> indicating whether the timer is currently running.</p>
+
+<hr>
+
+<h3>
+<a id="methods" class="anchor" href="#methods" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Methods</h3>
+
+<h4>
+<a id="timerstart" class="anchor" href="#timerstart" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>timer.start()</h4>
+
+<p>Start a timer. No-op if already started. Returns the timer object for chaining.</p>
+
+<h4>
+<a id="timercancel" class="anchor" href="#timercancel" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>timer.cancel()</h4>
+
+<p>Cancels a running timer. No-op if not started or already stopped/cancelled. Returns the timer object for chaining.</p>
+
+<hr>
+
+<h3>
+<a id="events" class="anchor" href="#events" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Events</h3>
+
+<h4>
+<a id="onstarted-cbname" class="anchor" href="#onstarted-cbname" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>on("started", cb(name))</h4>
+
+<p>Fired when the timer is started (or restarted).</p>
+
+<h4>
+<a id="oncancelled-cbname" class="anchor" href="#oncancelled-cbname" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>on("cancelled", cb(name))</h4>
+
+<p>Fired when the timer is cancelled.</p>
+
+<h4>
+<a id="ondone-cbname" class="anchor" href="#ondone-cbname" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>on("done", cb(name))</h4>
+
+<p>Fired when the timer is done (not cancelled).</p>
+
+<h4>
+<a id="ontimer-cbname-count" class="anchor" href="#ontimer-cbname-count" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>on("timer", cb(name, count))</h4>
+
+<p>Fired for each <code>timeout</code> interval,  once for single shot timers, or repeatdly for repeating timers.</p>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/venkatperi/ntimer">Ntimer</a> is maintained by <a href="https://github.com/venkatperi">venkatperi</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
