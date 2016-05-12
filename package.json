@@ -6,7 +6,7 @@
     "url": "https://github.com/venkatperi/ntimer.git"
   },
   "preferGlobal": false,
-  "description": "nodejs timer class with start/stop",
+  "description": "Event firing, repeatable, cancellable, auto-start capable timer for nodejs",
   "dependencies": {
     "error": "^7.0.2",
     "millisecond": "^0.1.2"
@@ -30,5 +30,14 @@
     "should": "^8.3.1"
   },
   "author": "Venkat Peri <venkatperi@gmail.com> (http://www.vperi.com/)",
-  "license": "MIT"
+  "license": "MIT",
+  "keywords": [
+    "auto",
+    "cancel",
+    "event",
+    "eventemitter",
+    "nodejs",
+    "start",
+    "timer"
+  ]
 }
