@@ -17,6 +17,7 @@ module.exports = class Timer extends EventEmitter
   constructor : ( {@name, @timeout, @auto, @repeat} = {} ) ->
     for o in [ 'name', 'timeout' ]
       throw MissingOptionError name : o unless @[ o ]
+
     @timeout = millisecond(@timeout) if typeof @timeout is 'string'
     throw InvalidArgumentError name : 'timeout' if @timeout <= 0
     @repeat ?= 1 # single shot
@@ -29,26 +30,26 @@ module.exports = class Timer extends EventEmitter
       @start() if @auto
 
   start : =>
-    return @ if @timer
-    @count = 0
-    @timer = setInterval @_onTimer, @timeout
-    @running = true
-    @emit "start", @name
+    @_start() unless @timer
     @
 
   cancel : =>
-    return @ unless @timer?
-    clearInterval @timer
-    @timer = undefined
-    @running = false
-    @emit "cancel", @name
+    @_stop 'cancel' if @timer?
     @
 
   _onTimer : =>
     @count += 1
     @emit 'timer', @name, @count
-    return unless @repeat >= 0 && @count >= @repeat
+    @_stop 'done' if @repeat >= 0 && @count >= @repeat
 
+  _stop : ( event ) =>
     clearInterval @timer
+    @running = false
     @timer = undefined
-    @emit "done", @name
+    @emit event, @name
+
+  _start : =>
+    @count = 0
+    @timer = setInterval @_onTimer, @timeout
+    @running = true
+    @emit "start", @name
