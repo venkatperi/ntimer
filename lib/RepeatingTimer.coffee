@@ -15,7 +15,10 @@ module.exports = class RepeatingTimer extends Timer
     @timer = undefined
     @emit "done", @name
 
-  doStart : ( fn ) => setInterval @_onTimer, @timeout
+  createTimer : ( fn ) =>
+    setInterval @_onTimer, @timeout
 
-  doCancel : ( fn ) => clearInterval @timer
+  destroyTimer : ( fn ) =>
+    clearInterval @timer
+    @timer = undefined
     

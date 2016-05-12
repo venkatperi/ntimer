@@ -17,7 +17,8 @@ describe "ntimer", ->
     done()
 
   it "accepts string times", ( done ) ->
-    (-> ntimer('10ms')).should.not.throw
+    t = ntimer('abc', '10ms')
+    t.timeout.should.equal 10
     done()
 
   it "needs valid timeout", ( done ) ->
@@ -33,19 +34,25 @@ describe "ntimer", ->
     done()
 
   it "auto starts", ( done ) ->
-    ntimer.auto 'foo', 1000
+    ntimer.auto 'foo', 200
     .on "done", ( name ) ->
       name.should.equal 'foo'
       done()
+
+  it "canceling stopped timer is a no-op", ( done ) ->
+    ntimer 'foo', 200
+    .on "cancel", -> throw new Error "eh?"
+    .cancel()
+    done()
 
   it "manual starts", ( done ) ->
     ntimer 'foo', 200
     .on "done", -> done()
     .start()
 
-  it "emits event: started", ( done ) ->
+  it "emits event: start", ( done ) ->
     ntimer 'foo', 200
-    .on "started", (name) ->
+    .on "start", ( name ) ->
       name.should.equal 'foo'
       done()
     .start()
@@ -55,41 +62,40 @@ describe "ntimer", ->
     .on "done", -> done()
     .start()
 
-  it "emits event: cancelled", ( done ) ->
+  it "emits event: cancel", ( done ) ->
     t = ntimer 'foo', 5000
-    .on "cancelled", (name) ->
+    .on "cancel", ( name ) ->
       name.should.equal 'foo'
       done()
     .start()
 
-    setTimeout ( -> t.cancel() ), 500
+    setTimeout ( -> t.cancel() ), 200
 
   it "can be restarted", ( done ) ->
-    t = ntimer.auto 'foo', 1000
-    .on "cancelled", -> done()
+    t = ntimer.auto 'foo', 500
+    .on "cancel", -> done()
     .on "done", ->
       # restart the timer and cancel it before it can fire again
       t.start()
-      setTimeout ( -> t.cancel() ), 500
+      setTimeout ( -> t.cancel() ), 50
     .start()
 
   it "can repeat", ( done ) ->
-    t = ntimer.repeat 'foo', 500
+    t = ntimer.repeat 'foo', 100
     .on "timer", ->
       t.cancel()
       done()
     .start()
 
-  it "can repeat", ( done ) ->
-    t = ntimer.repeat 'foo', 500
+  it "repeating timer can be cancel", ( done ) ->
+    t = ntimer.autoRepeat 'foo', 100
     .on "timer", ->
       t.cancel()
       done()
-    .start()
 
   it "repeat with a count", ( done ) ->
     count = 0
-    ntimer.repeat 'foo', 500, 3
+    ntimer.repeat 'foo', 100, 3
     .on "timer", ( name, c ) ->
       count++
       c.should.equal count
@@ -99,7 +105,7 @@ describe "ntimer", ->
     .start()
 
   it "can cancel repeating timer", ( done ) ->
-    t = ntimer.repeat 'foo', 500
+    t = ntimer.repeat 'foo', 100
     .on "timer", ->
       t.cancel()
       done()

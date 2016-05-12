@@ -20,29 +20,34 @@ module.exports = class Timer extends EventEmitter
     @timeout = millisecond(@timeout) if typeof @timeout is 'string'
     throw InvalidArgumentError name : 'timeout' if @timeout <= 0
     @init()
+    @running = false
     @start() if @auto
 
   init : ->
 
   start : =>
     return @ if @timer
-    @timer = @doStart()
-    @emit "started", @name
+    @timer = @createTimer()
+    @running = true
+    @emit "start", @name
     @
 
   cancel : =>
     return @ unless @timer?
-    @doCancel()
+    @destroyTimer()
+    @running = false
     @timer = undefined
-    @emit "cancelled", @name
+    @emit "cancel", @name
     @
 
   _onTimer : =>
-    @timer = undefined
     @emit "timer", @name, 1
     @emit "done", @name
 
-  doStart : ( fn ) => setTimeout @_onTimer, @timeout
+  createTimer : ( fn ) =>
+    setTimeout @_onTimer, @timeout
 
-  doCancel : ( fn ) => clearTimeout @timer
+  destroyTimer : ( fn ) =>
+    clearTimeout @timer
+    @timer = undefined
     

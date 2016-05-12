@@ -2,6 +2,7 @@
 An event firing, repeatable, cancellable timer for `nodejs`.
 
 [![Build Status](https://travis-ci.org/venkatperi/ntimer.svg?branch=master)](https://travis-ci.org/venkatperi/ntimer)
+[![npm version](https://badge.fury.io/js/ntimer.svg)](https://badge.fury.io/js/ntimer)
 
 ## Installation
 
@@ -34,7 +35,7 @@ ntimer.auto('foo', '2s')
 ```coffeescript
 t = ntimer.auto('foo', '5s')
 .on "done", -> # do something
-.on "cancelled", -> # why, oh why?
+.on "cancel", -> # why, oh why?
 
 # start another timer to cancel the above before it fires
 setTimeout ( -> t.cancel()), 500
@@ -94,11 +95,11 @@ Cancels a running timer. No-op if not started or already stopped/cancelled. Retu
 
 ### Events
 
-#### on("started", cb(name))
+#### on("start", cb(name))
 
 Fired when the timer is started (or restarted).
 
-#### on("cancelled", cb(name))
+#### on("cancel", cb(name))
 
 Fired when the timer is cancelled.
 
@@ -109,6 +110,5 @@ Fired when the timer is done (not cancelled).
 #### on("timer", cb(name, count))
 
 Fired for each `timeout` interval,  once for single shot timers, or repeatdly for repeating timers.
-
 
 

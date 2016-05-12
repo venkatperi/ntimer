@@ -1,5 +1,5 @@
 --require coffee-script/register
---require coffee-coverage/register-istanbul
+--require ./coffee-coverage-loader.coffee
 --compilers coffee:coffee-script/register
 --timeout 5000
 -R spec
