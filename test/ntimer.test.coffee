@@ -34,11 +34,15 @@ describe "ntimer", ->
     (-> ntimer('abc', 0)).should.throw
     done()
 
-  it "auto starts", ( done ) ->
-    ntimer.auto 'foo', 200
-    .on "done", ( name ) ->
-      name.should.equal 'foo'
-      done()
+  it "auto start won't start until we have a 'timer' listener", ( done ) ->
+    t = ntimer.auto 'foo', 100
+
+    ntimer.auto 'wait', 400
+    .on "timer", (n) ->
+      n.should.equal 'wait'
+      t.on 'timer', ( name ) ->
+        name.should.equal 'foo'
+        done()
 
   it "canceling stopped timer is a no-op", ( done ) ->
     ntimer 'foo', 200

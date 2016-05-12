@@ -21,7 +21,12 @@ module.exports = class Timer extends EventEmitter
     throw InvalidArgumentError name : 'timeout' if @timeout <= 0
     @repeat ?= 1 # single shot
     @running = false
-    @start() if @auto
+
+    # trigger auto start only when we have a listener for
+    # the 'timer' event.
+    @once 'newListener', ( event ) =>
+      return unless event is 'timer'
+      @start() if @auto
 
   start : =>
     return @ if @timer
