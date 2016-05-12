@@ -3,9 +3,6 @@ millisecond = require 'millisecond'
 
 module.exports = class RepeatingTimer extends Timer
 
-  init : =>
-    @count = 0
-
   _onTimer : =>
     @count += 1
     @emit 'timer', @name, @count
@@ -16,6 +13,7 @@ module.exports = class RepeatingTimer extends Timer
     @emit "done", @name
 
   createTimer : ( fn ) =>
+    @count = 0
     setInterval @_onTimer, @timeout
 
   destroyTimer : ( fn ) =>

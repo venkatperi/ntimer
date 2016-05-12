@@ -20,10 +20,7 @@ module.exports = class Timer extends EventEmitter
     @timeout = millisecond(@timeout) if typeof @timeout is 'string'
     throw InvalidArgumentError name : 'timeout' if @timeout <= 0
     @running = false
-    @init()
     @start() if @auto
-
-  init : ->
 
   start : =>
     return @ if @timer
