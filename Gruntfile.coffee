@@ -1,6 +1,5 @@
 config =
   tasks :
-
     clean :
       dist : [ "dist", "*.{js,map}", "lib/**/*.{map,js}" ]
 
@@ -15,9 +14,9 @@ config =
     coffeelint :
       app : [ 'lib/**/*.coffee', "*.coffee" ]
 
-    exec:
-      mocha_istanbul:
-        cmd: 'istanbul report lcov && open' +
+    exec :
+      mocha_istanbul :
+        cmd : 'istanbul report lcov && open' +
           ' ./coverage/lcov-report/index.html'
 
   load : [

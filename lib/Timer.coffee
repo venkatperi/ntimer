@@ -19,8 +19,8 @@ module.exports = class Timer extends EventEmitter
       throw MissingOptionError name : o unless @[ o ]
     @timeout = millisecond(@timeout) if typeof @timeout is 'string'
     throw InvalidArgumentError name : 'timeout' if @timeout <= 0
-    @init()
     @running = false
+    @init()
     @start() if @auto
 
   init : ->
@@ -50,4 +50,5 @@ module.exports = class Timer extends EventEmitter
   destroyTimer : ( fn ) =>
     clearTimeout @timer
     @timer = undefined
-    
+
+

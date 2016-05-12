@@ -5,14 +5,15 @@ timer = ( name, timeout ) ->
   new Timer name : name, timeout : timeout
 
 timer.auto = ( name, timeout ) ->
-  new Timer name : name, timeout : timeout, auto: true
+  new Timer name : name, timeout : timeout, auto : true
 
 timer.repeat = ( name, timeout, repeat ) ->
-  repeat = -1 unless repeat is Number repeat
+  repeat = -1 if Number.isNaN Number(repeat)
   new RepeatingTimer name : name, timeout : timeout, repeat : repeat
 
 timer.autoRepeat = ( name, timeout, repeat ) ->
-  repeat = -1 unless repeat is Number repeat
-  new RepeatingTimer name : name, timeout : timeout, repeat : repeat, auto: true
+  repeat = -1 if Number.isNaN Number(repeat)
+  new RepeatingTimer
+    name : name, timeout : timeout, repeat : repeat, auto : true
 
 module.exports = timer

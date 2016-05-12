@@ -1,3 +1,4 @@
+util = require 'util'
 should = require("should")
 assert = require("assert")
 ntimer = require '../index'
@@ -88,9 +89,9 @@ describe "ntimer", ->
     .start()
 
   it "repeating timer can be cancel", ( done ) ->
-    t = ntimer.autoRepeat 'foo', 100
+    ntimer.autoRepeat 'foo', 100
     .on "timer", ->
-      t.cancel()
+      @cancel()
       done()
 
   it "repeat with a count", ( done ) ->
