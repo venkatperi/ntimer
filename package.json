@@ -23,6 +23,7 @@
     "grunt-coffeelint": "0.0.15",
     "grunt-contrib-clean": "^1.0.0",
     "grunt-contrib-coffee": "^1.0.0",
+    "grunt-contrib-watch": "^1.0.0",
     "grunt-exec": "^0.4.6",
     "grunt-istanbul": "^0.7.0",
     "merge": "^1.2.0",
