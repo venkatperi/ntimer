@@ -109,6 +109,10 @@ Fired when the timer is done (not cancelled).
 
 #### on("timer", cb(name, count))
 
-Fired for each `timeout` interval,  once for single shot timers, or repeatdly for repeating timers.
+Fired for each `timeout` interval,  once for single shot timers, or repeatedly for repeating timers.
+
+## ntimer.Timer Class
+`ntimer` exports the Timer class.
+
 
 

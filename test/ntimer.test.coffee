@@ -112,6 +112,10 @@ describe "ntimer", ->
       done()
     .start()
 
+  it "exports Timer class", ( done ) ->
+    ntimer.Timer.should.exist
+    done()
+
 
 
 

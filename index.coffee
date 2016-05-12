@@ -1,5 +1,4 @@
 Timer = require './lib/Timer'
-RepeatingTimer = require './lib/RepeatingTimer'
 
 timer = ( name, timeout ) ->
   new Timer name : name, timeout : timeout
@@ -9,11 +8,13 @@ timer.auto = ( name, timeout ) ->
 
 timer.repeat = ( name, timeout, repeat ) ->
   repeat = -1 if Number.isNaN Number(repeat)
-  new RepeatingTimer name : name, timeout : timeout, repeat : repeat
+  new Timer name : name, timeout : timeout, repeat : repeat
 
-timer.autoRepeat = ( name, timeout, repeat ) ->
+timer.autoRepeat = ( name, timeout, repeat, auto ) ->
   repeat = -1 if Number.isNaN Number(repeat)
-  new RepeatingTimer
+  new Timer
     name : name, timeout : timeout, repeat : repeat, auto : true
+
+timer.Timer = Timer
 
 module.exports = timer
