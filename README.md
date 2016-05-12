@@ -28,8 +28,9 @@ ntimer('foo', '2s')
 
 ```coffeescript
 # Creates an auto-start timer which fires after 200ms
+# Must attach a 'timer' event listener to enable auto start
 ntimer.auto('foo', 200)
-.on "done", -> # do something
+.on "timer", -> # do something
 ```
 
 ### Cancel Timer
